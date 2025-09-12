@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Added favicon -->
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+    
+    <!-- Enhanced SEO meta tags -->
+    <title>Seleção de Emprego - Agência de Empregos | Encontre sua Vaga Ideal</title>
+    <meta name="description" content="Agência de empregos especializada em conectar candidatos às melhores oportunidades profissionais. Cadastre-se gratuitamente e encontre sua vaga ideal.">
+    <meta name="keywords" content="emprego, vaga, trabalho, carreira, agência de emprego, oportunidade profissional, candidato, recrutamento, seleção">
+    <meta name="author" content="Seleção de Emprego">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="pt-BR">
+    <meta name="revisit-after" content="7 days">
+    <meta name="rating" content="general">
+    
+    <!-- Open Graph tags for Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Seleção de Emprego - Agência de Empregos">
+    <meta property="og:description" content="Encontre sua próxima oportunidade profissional. Cadastre-se gratuitamente em nossa agência de empregos e conecte-se às melhores vagas do mercado.">
+    <meta property="og:image" content="img/compartilhamento.png">
+    <meta property="og:url" content="https://seudominio.com">
+    <meta property="og:site_name" content="Seleção de Emprego">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Twitter Card tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Seleção de Emprego - Agência de Empregos">
+    <meta name="twitter:description" content="Encontre sua próxima oportunidade profissional. Cadastre-se gratuitamente em nossa agência de empregos.">
+    <meta name="twitter:image" content="img/compartilhamento.png">
+    
+    <!-- WhatsApp specific tags -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Seleção de Emprego - Agência de Empregos">
+    
+    <!-- Additional SEO tags -->
+    <meta name="theme-color" content="#2c5530">
+    <meta name="msapplication-TileColor" content="#2c5530">
+    <meta name="application-name" content="Seleção de Emprego">
+    
+    <!-- Structured data for better SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Seleção de Emprego",
+        "description": "Agência de empregos especializada em conectar candidatos às melhores oportunidades profissionais",
+        "url": "https://seudominio.com",
+        "logo": "img/favicon.png",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer service",
+            "availableLanguage": "Portuguese"
+        },
+        "sameAs": [
+            "https://facebook.com/selecaodeemprego",
+            "https://instagram.com/selecaodeemprego"
+        ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <i class="fas fa-briefcase header-icon"></i>
+                <h1>Seleção de Emprego</h1>
+            </div>
+            <p class="header-subtitle">Encontre sua próxima oportunidade profissional</p>
+        </header>
+
+        <!-- Main Form -->
+        <main class="main-content">
+            <form id="jobForm" class="job-form" novalidate>
+                <div class="form-section">
+                    <h2><i class="fas fa-user"></i> Informações Pessoais</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fullName">Nome Completo *</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                            <span class="error-message" id="fullName-error"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">E-mail *</label>
+                            <input type="email" id="email" name="email" required>
+                            <span class="error-message" id="email-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Telefone *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                            <span class="error-message" id="phone-error"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="birthDate">Data de Nascimento *</label>
+                            <input type="date" id="birthDate" name="birthDate" required>
+                            <span class="error-message" id="birthDate-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gênero *</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="masculino" required>
+                                <span>Masculino</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="feminino" required>
+                                <span>Feminino</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="outro" required>
+                                <span>Outro</span>
+                            </label>
+                        </div>
+                        <span class="error-message" id="gender-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Endereço</label>
+                        <input type="text" id="address" name="address" placeholder="Rua, número, bairro, cidade, estado">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-briefcase"></i> Informações Profissionais</h2>
+                    
+                    <div class="form-group">
+                        <label for="professionalArea">Área de Interesse Profissional</label>
+                        <select id="professionalArea" name="professionalArea">
+                            <option value="">Selecione uma área</option>
+                            <option value="administracao">Administração</option>
+                            <option value="tecnologia">Tecnologia da Informação</option>
+                            <option value="engenharia">Engenharia</option>
+                            <option value="saude">Saúde</option>
+                            <option value="educacao">Educação</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="vendas">Vendas</option>
+                            <option value="rh">Recursos Humanos</option>
+                            <option value="financas">Finanças</option>
+                            <option value="contabilidade">Contabilidade</option>
+                            <option value="direito">Direito</option>
+                            <option value="design">Design</option>
+                            <option value="arquitetura">Arquitetura</option>
+                            <option value="construcao">Construção Civil</option>
+                            <option value="logistica">Logística</option>
+                            <option value="producao">Produção Industrial</option>
+                            <option value="atendimento">Atendimento ao Cliente</option>
+                            <option value="seguranca">Segurança</option>
+                            <option value="turismo">Turismo e Hotelaria</option>
+                            <option value="gastronomia">Gastronomia</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experience">Experiência Profissional</label>
+                        <textarea id="experience" name="experience" rows="4" placeholder="Descreva sua experiência profissional, cargos anteriores, principais responsabilidades..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="education">Escolaridade</label>
+                        <select id="education" name="education">
+                            <option value="">Selecione seu nível de escolaridade</option>
+                            <option value="fundamental">Ensino Fundamental</option>
+                            <option value="medio">Ensino Médio</option>
+                            <option value="tecnico">Ensino Técnico</option>
+                            <option value="superior">Ensino Superior</option>
+                            <option value="especializacao">Especialização</option>
+                            <option value="mestrado">Mestrado</option>
+                            <option value="doutorado">Doutorado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-key"></i> Dados de Acesso</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="username">Nome de Usuário</label>
+                            <input type="text" id="username" name="username">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Senha *</label>
+                            <input type="password" id="password" name="password" maxlength="8" required>
+                            <small>Exatamente 8 caracteres</small>
+                            <span class="error-message" id="password-error"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-upload"></i> Currículo</h2>
+                    
+                    <div class="form-group">
+                        <label for="resume">Upload do Currículo (PDF)</label>
+                        <div class="file-upload">
+                            <input type="file" id="resume" name="resume" accept=".pdf">
+                            <div class="file-upload-display">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Clique para selecionar ou arraste seu currículo em PDF</span>
+                            </div>
+                        </div>
+                        <span class="error-message" id="resume-error"></span>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="acceptTerms" name="acceptTerms" required>
+                            <span class="checkmark"></span>
+                            Aceito os <a href="#" target="_blank">Termos e Condições</a> da agência *
+                        </label>
+                        <span class="error-message" id="acceptTerms-error"></span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        Enviar Candidatura
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="clearForm">
+                        <i class="fas fa-eraser"></i>
+                        Limpar Campos
+                    </button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
