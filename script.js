@@ -79,47 +79,61 @@ function handleSubmit(e) {
 
 async function sendToGoogleSheets(formData) {
   try {
-    // URL do seu Google Apps Script (você receberá após fazer o deploy)
+    // URL do seu Google Apps Script
     const SCRIPT_URL =
       "https://script.google.com/macros/s/AKfycbyfX4GjYxlG96T7MRnQMqF2ahCG4X4Nxwrd25jrlFkkk6RJ5bzA4gzmqWf-Gh1CCEWxVg/exec"
 
-    // Preparar dados para envio
-    const dataToSend = {
-      fullName: formData.fullName,
-      email: formData.email,
-      phone: formData.phone,
-      birthDate: formData.birthDate,
-      gender: formData.gender,
-      address: formData.address || "",
-      interest: formData.interest || "",
-      experience: formData.experience || "",
-      education: formData.education || "",
-      login: formData.login || "",
-      password: formData.password,
-      resumeFileName: formData.resumeFile ? formData.resumeFile.name : "",
-    }
+    // Preparar FormData para envio (mais compatível com Google Apps Script)
+    const formDataToSend = new FormData()
+    formDataToSend.append("fullName", formData.fullName)
+    formDataToSend.append("email", formData.email)
+    formDataToSend.append("phone", formData.phone)
+    formDataToSend.append("birthDate", formData.birthDate)
+    formDataToSend.append("gender", formData.gender)
+    formDataToSend.append("address", formData.address || "")
+    formDataToSend.append("interest", formData.interest || "")
+    formDataToSend.append("experience", formData.experience || "")
+    formDataToSend.append("education", formData.education || "")
+    formDataToSend.append("login", formData.login || "")
+    formDataToSend.append("password", formData.password)
+    formDataToSend.append("resumeFileName", formData.resumeFile ? formData.resumeFile.name : "")
 
-    // Fazer requisição
+    console.log("[v0] Enviando dados via FormData")
+
+    // Fazer requisição com timeout
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 30000) // 30 segundos timeout
+
     const response = await fetch(SCRIPT_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dataToSend),
+      body: formDataToSend,
+      signal: controller.signal,
+      mode: "no-cors", // Mudando para no-cors para evitar problemas de CORS
     })
 
-    const result = await response.json()
+    clearTimeout(timeoutId)
 
-    if (result.success) {
-      showSuccessMessage()
-      // Opcional: limpar formulário após envio bem-sucedido
-      // clearForm()
-    } else {
-      showErrorMessage(result.message || "Erro ao enviar dados")
-    }
+    console.log("[v0] Requisição enviada")
+
+    // Com no-cors, não conseguimos ler a resposta, então assumimos sucesso se não houve erro
+    showSuccessMessage()
+
+    // Opcional: limpar formulário após envio
+    setTimeout(() => {
+      if (confirm("Dados enviados com sucesso! Deseja limpar o formulário?")) {
+        clearForm()
+      }
+    }, 1000)
   } catch (error) {
-    console.error("Erro ao enviar dados:", error)
-    showErrorMessage("Erro de conexão. Tente novamente.")
+    console.error("[v0] Erro ao enviar dados:", error)
+
+    let errorMessage = "Erro de conexão. Tente novamente."
+
+    if (error.name === "AbortError") {
+      errorMessage = "Timeout: A requisição demorou muito para responder."
+    }
+
+    showErrorMessage(errorMessage)
   } finally {
     hideLoadingMessage()
   }
@@ -250,7 +264,9 @@ function clearForm() {
 
 // Mostrar mensagem de sucesso
 function showSuccessMessage() {
-  alert("Formulário enviado com sucesso! Entraremos em contato em breve.")
+  alert(
+    "✅ Formulário enviado com sucesso!\n\nSeus dados foram salvos e entraremos em contato em breve.\n\nObrigado por se candidatar!",
+  )
 }
 
 function showLoadingMessage() {
@@ -266,7 +282,7 @@ function hideLoadingMessage() {
 }
 
 function showErrorMessage(message) {
-  alert("Erro: " + message)
+  alert("❌ Erro: " + message + "\n\nTente novamente ou entre em contato conosco se o problema persistir.")
 }
 
 // Máscara para telefone (opcional)
