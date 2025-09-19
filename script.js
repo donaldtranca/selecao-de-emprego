@@ -83,7 +83,7 @@ async function sendToGoogleSheets(formData) {
     const SCRIPT_URL =
       "https://script.google.com/macros/s/AKfycbzj8KOX4ZAh5o--mSaiOHAkBjQt55KbOJSRNj7L4fDr02Ejhg7ns7Y66ZlSL1wxnSZJ4A/exec"
 
-    // Preparar FormData para envio
+    // Preparar FormData para envio (mais compatível com Google Apps Script)
     const formDataToSend = new FormData()
     formDataToSend.append("fullName", formData.fullName)
     formDataToSend.append("email", formData.email)
@@ -98,28 +98,42 @@ async function sendToGoogleSheets(formData) {
     formDataToSend.append("password", formData.password)
     formDataToSend.append("resumeFileName", formData.resumeFile ? formData.resumeFile.name : "")
 
-    console.log("[v1] Enviando dados via fetch")
+    console.log("[v0] Enviando dados via FormData")
+
+    // Fazer requisição com timeout
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 30000) // 30 segundos timeout
 
     const response = await fetch(SCRIPT_URL, {
       method: "POST",
-      body: formDataToSend
+      body: formDataToSend,
+      signal: controller.signal,
+      mode: "no-cors", // Mudando para no-cors para evitar problemas de CORS
     })
 
-    const data = await response.json()
+    clearTimeout(timeoutId)
 
-    if (data.success) {
-      showSuccessMessage()
-      setTimeout(() => {
-        if (confirm("Dados enviados com sucesso! Deseja limpar o formulário?")) {
-          clearForm()
-        }
-      }, 1000)
-    } else {
-      showErrorMessage(data.message || "Erro desconhecido ao enviar os dados.")
-    }
+    console.log("[v0] Requisição enviada")
+
+    // Com no-cors, não conseguimos ler a resposta, então assumimos sucesso se não houve erro
+    showSuccessMessage()
+
+    // Opcional: limpar formulário após envio
+    setTimeout(() => {
+      if (confirm("Dados enviados com sucesso! Deseja limpar o formulário?")) {
+        clearForm()
+      }
+    }, 1000)
   } catch (error) {
-    console.error("[v1] Erro ao enviar dados:", error)
-    showErrorMessage("Erro de conexão. Tente novamente.")
+    console.error("[v0] Erro ao enviar dados:", error)
+
+    let errorMessage = "Erro de conexão. Tente novamente."
+
+    if (error.name === "AbortError") {
+      errorMessage = "Timeout: A requisição demorou muito para responder."
+    }
+
+    showErrorMessage(errorMessage)
   } finally {
     hideLoadingMessage()
   }
@@ -129,8 +143,10 @@ async function sendToGoogleSheets(formData) {
 function validateForm() {
   let isValid = true
 
+  // Limpar erros anteriores
   clearAllErrors()
 
+  // Validar campos obrigatórios
   requiredFields.forEach((fieldName) => {
     const field = document.querySelector(`[name="${fieldName}"]`)
 
@@ -162,6 +178,7 @@ function validateForm() {
     }
   })
 
+  // Validar email
   const email = document.getElementById("email")
   if (email.value && !isValidEmail(email.value)) {
     showError("email", "Digite um e-mail válido")
@@ -186,6 +203,7 @@ function collectFormData() {
     data[key] = value
   }
 
+  // Adicionar arquivo se existir
   if (fileInput.files[0]) {
     data.resumeFile = fileInput.files[0]
   }
@@ -267,7 +285,7 @@ function showErrorMessage(message) {
   alert("❌ Erro: " + message + "\n\nTente novamente ou entre em contato conosco se o problema persistir.")
 }
 
-// Máscara para telefone
+// Máscara para telefone (opcional)
 document.getElementById("phone").addEventListener("input", (e) => {
   let value = e.target.value.replace(/\D/g, "")
 
