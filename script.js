@@ -81,7 +81,7 @@ async function sendToGoogleSheets(formData) {
   try {
     // URL do seu Google Apps Script
     const SCRIPT_URL =
-      "https://script.google.com/macros/s/AKfycbzj8KOX4ZAh5o--mSaiOHAkBjQt55KbOJSRNj7L4fDr02Ejhg7ns7Y66ZlSL1wxnSZJ4A/exec"
+      "https://script.google.com/macros/s/AKfycbw4TcOTY4Hj5vzncrKntyulHhCyk7VVIRjgO3V2Kw3nTT6Gt78By2WlD82jsGL7DoWqxQ/exec"
 
     // Preparar FormData para envio (mais compatível com Google Apps Script)
     const formDataToSend = new FormData()
@@ -298,3 +298,4 @@ document.getElementById("phone").addEventListener("input", (e) => {
     e.target.value = value
   }
 })
+
